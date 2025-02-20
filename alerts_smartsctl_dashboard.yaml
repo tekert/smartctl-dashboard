@@ -1,0 +1,939 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 30m
+      folder: Hardware
+      interval: 30m
+      rules:
+        - uid: ce75i3rm4dszkc
+          title: SmartCtl Exit Bit 0 Error
+          condition: ALERT
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "bitmap_and(\r\n  smartctl_device * on(device,instance) group_right(model_name,serial_number) smartctl_device_smartctl_exit_status,\r\n  0x01 # Bit 0 = 0000 0001\r\n) "
+                instant: true
+                intervalMs: 1000
+                legendFormat: Bit 0 ON
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: ALERT
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - J
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: ALERT
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 112
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "112"
+            description: |-
+                Command line did not parse.
+                on device: [{{$labels.device}}]  from {{ $labels.instance }}
+            summary: 'Bit 0 ERROR on {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: error
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: ae75kzkj6usxsd
+          title: SmartCtl Exit Bit 1 Error
+          condition: ALERT
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "bitmap_and(\r\n  smartctl_device * on(device,instance) group_right(model_name,serial_number) smartctl_device_smartctl_exit_status,\r\n  0x02 # Bit 1 = 0000 0010\r\n) "
+                instant: true
+                intervalMs: 1000
+                legendFormat: Bit 1 ON
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: ALERT
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - J
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: ALERT
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 112
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "112"
+            description: |-
+                Device open failed, device did not return an IDENTIFY DEVICE structure, or device is in a low-power mode (see '-n' option above).
+
+                on device: [{{$labels.device}}]  from {{ $labels.instance }}
+            summary: 'Bit 1 ERROR on {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: error
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: ee75l2c9kwpa8d
+          title: SmartCtl Exit Bit 2 Error
+          condition: ALERT
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "bitmap_and(\r\n  smartctl_device * on(device,instance) group_right(model_name,serial_number) smartctl_device_smartctl_exit_status,\r\n  0x04 # Bit 2 = 0000 0100\r\n) "
+                instant: true
+                intervalMs: 1000
+                legendFormat: Bit 2 ON
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: ALERT
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - J
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: ALERT
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 112
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "112"
+            description: |-
+                Some SMART or other ATA command to the disk failed, or there was a checksum error in a SMART data structure (see '-b' option above).
+
+                on device: [{{$labels.device}}]  from {{ $labels.instance }}
+            summary: 'Bit 2 ERROR on {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: error
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: fe75lc8gt5gjkb
+          title: SmartCtl Exit Bit 3 Error
+          condition: ALERT
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "bitmap_and(\r\n  smartctl_device * on(device,instance) group_right(model_name,serial_number) smartctl_device_smartctl_exit_status,\r\n  0x08 # Bit 3 = 0000 1000\r\n) "
+                instant: true
+                intervalMs: 1000
+                legendFormat: Bit 3 ON
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: ALERT
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - J
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: ALERT
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 112
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "112"
+            description: |-
+                SMART status check returned "DISK FAILING".
+
+                on device: [{{$labels.device}}]  from {{ $labels.instance }}
+            summary: 'Bit 3 ERROR on {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: emergency
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: fe75lkfzhp1c0b
+          title: SmartCtl Exit Bit 4 Error
+          condition: ALERT
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "bitmap_and(\r\n  smartctl_device * on(device,instance) group_right(model_name,serial_number) smartctl_device_smartctl_exit_status,\r\n  0x10 # Bit 4 = 0001 0000\r\n) "
+                instant: true
+                intervalMs: 1000
+                legendFormat: Bit 4 ON
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: ALERT
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - J
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: ALERT
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 112
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "112"
+            description: |-
+                We found prefail Attributes <= threshold.
+
+                on device: [{{$labels.device}}]  from {{ $labels.instance }}
+            summary: 'Bit 4 ERROR on {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: warning
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: fe75ln170an7kd
+          title: SmartCtl Exit Bit 5 Error
+          condition: ALERT
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "bitmap_and(\r\n  smartctl_device * on(device,instance) group_right(model_name,serial_number) smartctl_device_smartctl_exit_status,\r\n  0x20 # BIT 5 = 0010 0000\r\n) "
+                instant: true
+                intervalMs: 1000
+                legendFormat: Bit 5 ON
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: ALERT
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - J
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: ALERT
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 112
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "112"
+            description: |-
+                SMART status check returned "DISK OK" but we found that some (usage or prefail) Attributes have been <= threshold at some time in the past.
+
+                on device: [{{$labels.device}}]  from {{ $labels.instance }}
+            summary: 'Bit 5 ERROR on {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: warning
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: ee75lrq58k1dsc
+          title: SmartCtl Exit Bit 6 Error
+          condition: ALERT
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "bitmap_and(\r\n  smartctl_device * on(device,instance) group_right(model_name,serial_number) smartctl_device_smartctl_exit_status,\r\n  0x40 # BIT 6 = 0100 0000\r\n) "
+                instant: true
+                intervalMs: 1000
+                legendFormat: Bit 6 ON
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: ALERT
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - J
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: ALERT
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 112
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "112"
+            description: |-
+                The device error log contains records of errors.
+
+                on device: [{{$labels.device}}]  from {{ $labels.instance }}
+            summary: 'Bit 6 ERROR on {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: notice
+            type: hardware
+          isPaused: true
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: ae75luvwjl1xce
+          title: SmartCtl Exit Bit 7 Error
+          condition: ALERT
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "bitmap_and(\r\n  smartctl_device * on(device,instance) group_right(model_name,serial_number) smartctl_device_smartctl_exit_status,\r\n  0x80 # BIT 7 = 1000 0000\r\n) "
+                instant: true
+                intervalMs: 1000
+                legendFormat: Bit 7 ON
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: ALERT
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - J
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: ALERT
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 112
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "112"
+            description: "The device self-test log contains records of errors. [ATA only] Failed self-tests outdated by a newer successful extended self-test are ignored. \n\non device: [{{$labels.device}}]  from {{ $labels.instance }}"
+            summary: 'Bit 7 ERROR on {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: notice
+            type: hardware
+          isPaused: true
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: de75mk4ee4074a
+          title: NVMe Critical warning error
+          condition: I
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "smartctl_device\r\n* on(device,instance) group_right(model_name,serial_number)\r\nsmartctl_device_critical_warning\r\n"
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: I
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - I
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: I
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 98
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "98"
+            description: "Critical Warning on an NVMe controller.  \non device: [{{$labels.device}}]  from {{ $labels.instance }}"
+            summary: 'Critical Warning on an NVMe controller  {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: critical
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: be75pa2qpqi9sb
+          title: 'ATA SSD Life < 3% '
+          condition: B
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "# Western Digital = 169\r\n# Seagate = 231\r\n# Crucial = 202\r\nmin\r\n(\r\n  smartctl_device * on(device,instance) group_right(model_name, serial_number)\r\n  smartctl_device_attribute{attribute_id=~\"169|231|202\",attribute_value_type=\"value\"}\r\n)"
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 3
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: B
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 1393
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "1393"
+            description: 'This SATA SSD is low on life remaining, check S.M.A.R.T for this disk: on device: [{{$labels.device}}]  from {{ $labels.instance }}'
+            summary: 'Low SATA SSD life on {{$labels.model_name}} : {{$labels.serial_number}}'
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+        - uid: be75pob10kflsc
+          title: NVMe Percentage Used > 97%
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 172800
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                expr: "smartctl_device * on(device,instance) group_right(model_name,serial_number)\r\nsmartctl_device_percentage_used{}"
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 97
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 104
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "104"
+            description: |-
+                NVMe Used Life near it's end:
+                on device: [{{$labels.device}}]  from {{ $labels.instance }}
+            summary: 'Low life on NVMe drive: {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: warning
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+            repeat_interval: 1w
+        - uid: ae76ulza6imf4a
+          title: NVMe Writes [Montly Quota] exceeded
+          condition: D
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 2592000
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                exemplar: false
+                expr: "WITH (\r\n    written_bytes_per_device = smartctl_device * on(device,instance) group_right(model_name,serial_number) \r\n        smartctl_device_bytes_written > 0,\r\n    written_bytes_per_serial = max(written_bytes_per_device) without(device),\r\n    written_gigabytes = written_bytes_per_serial/1000/1000/1000, # GB\r\n    increase_month = increase(written_gigabytes[4w:1h]),\r\n\r\n    alert_above_average_gb_month = 300, # It's better to hardcore your quota instead of using zscores or\r\n        # avg_over_time(increase_month[1y:1h]) for this variable.\r\n)\r\nlabel_set(  increase_month > alert_above_average_gb_month       , \"type\", \"300 GB/Month\")\r\n"
+                format: time_series
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: TEST
+              relativeTimeRange:
+                from: 30672000
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                exemplar: false
+                expr: "# Just testing\r\nWITH (\r\n    written_bytes_per_device = smartctl_device * on(device,instance) group_right(model_name,serial_number) \r\n        smartctl_device_bytes_written > 0,\r\n    written_bytes_per_serial = max(written_bytes_per_device) without(device),    \r\n    written_megas = written_bytes_per_serial/1000/1000, # GB\r\n    written_gigabytes = written_bytes_per_serial/1000/1000/1000, # GB\r\n    increase_day = increase(written_gigabytes[1d:1i]),\r\n    increase_month = increase(written_gigabytes[4w:1i]),\r\n    alert_above_average_gb_day = 10, # avg_over_time(increase_day[1y:1i]),\r\n\r\n    z_score_manual = (increase_day - alert_above_average_gb_day)  /  stddev_over_time(increase_day[1y:1i]),\r\n    z_score_native = zscore_over_time(increase_day[1y:1i]),\r\n)\r\n\r\nunion(\r\n    #label_set(  (written_gigabytes - written_gigabytes offset 1y) / (written_gigabytes offset 1y) * 100\r\n         #, \"type\", \"%\"),\r\n    label_set( avg_over_time(increase_month[1y:1d]), \"type\", \"Montly average in day steps\"),\r\n    #label_set( increase_day , \"type\", \"gigabytes usados por 1d\"),\r\n    #label_set( alert_above_average_gb_day , \"type\", \"alert_above_average_gb_day\"),\r\n    #label_set( z_score_manual , \"type\", \"z-score avg 10gb\"),\r\n    #label_set( z_score_nativo  , \"type\", \"z_score_native\"),\r\n    #label_set( z_score_nativo_sum  , \"type\", \"z_score_native_sum\"),\r\n)"
+                format: time_series
+                instant: false
+                intervalMs: 3.6e+06
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: true
+                refId: TEST
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: C
+                type: reduce
+            - refId: D
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 6
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - D
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 5
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: C
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: D
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 76
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "76"
+            description: Writes exceeding montly cuota of {{$labels.type}}
+            summary: NVMe Writtes exceeding montly cuota
+          labels:
+            severity: warning
+            type: hardware
+          isPaused: false
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
+            group_interval: 1w
+            repeat_interval: 1w
+        - uid: ae76ye944xc74c
+          title: Bytes Read/Written (hard cap per 160GB week)
+          condition: D
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 2592000
+                to: 0
+              datasourceUid: a94da36f-8bb5-442e-bf57-55a5c3219879
+              model:
+                datasource:
+                    type: prometheus
+                    uid: a94da36f-8bb5-442e-bf57-55a5c3219879
+                editorMode: code
+                exemplar: false
+                expr: "WITH (\r\n    written_bytes = smartctl_device * on(device,instance) group_right(model_name,serial_number) \r\n        smartctl_device_bytes_written > 0,\r\n    written_gigabytes = written_bytes/1000/1000/1000, # GB\r\n    increase_week = increase(written_gigabytes[1w]),\r\n)\r\n\r\n# \"Written GB per week\" \" Hard cap\"\r\n(increase_week - avg_over_time(increase_week[1y:1h])) > 160 #Gb per week\r\n"
+                format: time_series
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: C
+                type: reduce
+            - refId: D
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - D
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                      unloadEvaluator:
+                        params:
+                            - 0
+                        type: lt
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: C
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: D
+                type: threshold
+          dashboardUid: VY1NDa44k
+          panelId: 76
+          noDataState: KeepLast
+          execErrState: Error
+          annotations:
+            __dashboardUid__: VY1NDa44k
+            __panelId__: "76"
+            description: Daily writtes exceeding the yearly average by > 6 standard deviations
+            summary: 'NVMe daily writes deviates from normal: {{$labels.model_name}} : {{$labels.serial_number}}'
+          labels:
+            severity: warning
+            type: hardware
+          isPaused: true
+          notification_settings:
+            receiver: grafana-alert@tekert.com.ar
