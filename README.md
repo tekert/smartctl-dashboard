@@ -4,7 +4,7 @@ Victoria Metrics is requiered as datasource
 
 Every panel has tooltips to help.
 It has support for old drives that are no longer connected (sometimes is important to know historical data of stored drives)
-The graph are easier to read, red/yellow colors are error/warnings,  green = normal/ok, gray = data
+The graph are easier to read, red/yellow colors are error/warnings,  green = normal/ok, gray/blue = data
 
 Add alerts as an example to get started.
 
