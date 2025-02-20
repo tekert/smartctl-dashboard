@@ -3,6 +3,7 @@
 Victoria Metrics is requiered as datasource
 
 Every panel has tooltips to help.
+It has support for old drives that are no longer connected (sometimes is important to know historical data of stored drives)
 
 Add alerts as an example to get started.
 
