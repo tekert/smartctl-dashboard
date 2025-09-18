@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "11.4.0"
+      "version": "12.1.1"
     },
     {
       "type": "panel",
@@ -161,7 +161,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -195,7 +195,7 @@
                   "steps": [
                     {
                       "color": "green",
-                      "value": null
+                      "value": 0
                     },
                     {
                       "color": "#EAB839",
@@ -306,7 +306,7 @@
                   "steps": [
                     {
                       "color": "green",
-                      "value": null
+                      "value": 0
                     },
                     {
                       "color": "#EAB839",
@@ -361,7 +361,7 @@
                   "steps": [
                     {
                       "color": "green",
-                      "value": null
+                      "value": 0
                     },
                     {
                       "color": "red",
@@ -437,7 +437,7 @@
                   "steps": [
                     {
                       "color": "red",
-                      "value": null
+                      "value": 0
                     },
                     {
                       "color": "#EAB839",
@@ -540,7 +540,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -787,7 +787,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -813,7 +813,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "justifyMode": "center",
+        "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
@@ -830,7 +830,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -904,7 +904,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -931,11 +931,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -981,7 +982,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -1195,7 +1196,7 @@
           }
         ]
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "g",
@@ -1520,7 +1521,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -1552,10 +1553,11 @@
           "values": false
         },
         "showPercentChange": false,
+        "text": {},
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -1596,7 +1598,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -1636,7 +1638,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -1647,9 +1649,9 @@
           "exemplar": false,
           "expr": "smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}",
           "format": "time_series",
-          "instant": false,
+          "instant": true,
           "legendFormat": "Connected as device: [{{device}}] from {{instance}}",
-          "range": true,
+          "range": false,
           "refId": "A"
         },
         {
@@ -1702,7 +1704,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -1743,7 +1745,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -1776,6 +1778,7 @@
             "mode": "fixed"
           },
           "custom": {
+            "axisPlacement": "auto",
             "fillOpacity": 70,
             "hideFrom": {
               "legend": false,
@@ -1792,7 +1795,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -1817,11 +1820,12 @@
         "rowHeight": 0.9,
         "showValue": "auto",
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -1858,7 +1862,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -1893,7 +1897,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -1929,7 +1933,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "yellow",
@@ -1969,7 +1973,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -2329,7 +2333,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -2364,7 +2368,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "s",
@@ -2609,7 +2613,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -2642,7 +2646,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -2679,7 +2683,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -2711,7 +2715,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -2748,7 +2752,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -2784,7 +2788,7 @@
         "textMode": "value_and_name",
         "wideLayout": false
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -2819,7 +2823,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "yellow",
@@ -2859,7 +2863,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -3220,7 +3224,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -3256,7 +3260,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -3556,7 +3560,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -3664,11 +3668,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "asc"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -5682,7 +5687,7 @@
             "steps": [
               {
                 "color": "red",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -5737,11 +5742,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "asc"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -6257,7 +6263,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "super-light-red",
@@ -6312,11 +6318,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "asc"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -6346,6 +6353,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "axisPlacement": "auto",
             "fillOpacity": 70,
             "hideFrom": {
               "legend": false,
@@ -6376,7 +6384,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "dark-red",
@@ -6405,11 +6413,12 @@
         "rowHeight": 0.9,
         "showValue": "never",
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "b",
@@ -8272,7 +8281,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -8303,10 +8312,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -8587,7 +8598,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -8613,11 +8624,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -8687,7 +8699,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -8713,11 +8725,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -8787,7 +8800,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -8854,11 +8867,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -8901,6 +8915,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "axisPlacement": "auto",
             "fillOpacity": 70,
             "hideFrom": {
               "legend": false,
@@ -8931,7 +8946,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "dark-red",
@@ -8960,11 +8975,12 @@
         "rowHeight": 0.9,
         "showValue": "never",
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "b",
@@ -11084,7 +11100,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -11111,10 +11127,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -11669,7 +11687,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -11704,7 +11722,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -11741,7 +11759,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               },
               {
                 "color": "blue",
@@ -11777,7 +11795,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -11789,9 +11807,9 @@
           "expr": "smartctl_device{serial_number=\"$ata_serial\", instance=~\"$instance\"}",
           "format": "time_series",
           "hide": false,
-          "instant": false,
+          "instant": true,
           "legendFormat": "Connected as device: [{{device}}] from: {{instance}}",
-          "range": true,
+          "range": false,
           "refId": "A"
         },
         {
@@ -11845,7 +11863,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -11886,7 +11904,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -11918,6 +11936,7 @@
             "mode": "continuous-BlPu"
           },
           "custom": {
+            "axisPlacement": "auto",
             "fillOpacity": 70,
             "hideFrom": {
               "legend": false,
@@ -11934,7 +11953,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -11959,11 +11978,12 @@
         "rowHeight": 0.9,
         "showValue": "auto",
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -12001,7 +12021,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -12036,7 +12056,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -12073,7 +12093,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "yellow",
@@ -12113,7 +12133,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -12474,7 +12494,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -12509,7 +12529,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "s",
@@ -12756,7 +12776,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -12791,7 +12811,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "s",
@@ -13036,7 +13056,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -13072,7 +13092,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -13315,7 +13335,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -13351,7 +13371,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "s",
@@ -13597,7 +13617,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -13633,7 +13653,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "s",
@@ -13876,7 +13896,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -13912,7 +13932,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -13948,7 +13968,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "yellow",
@@ -13988,7 +14008,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -14365,7 +14385,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -14398,7 +14418,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "(",
@@ -14890,7 +14910,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -14923,7 +14943,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "W",
@@ -15438,7 +15458,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -15470,7 +15490,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "(",
@@ -15941,7 +15961,7 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "(\r\n  smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n    * on(device,instance) group_right(serial_number)\r\n  smartctl_device_attribute{\r\n    instance=~\"$instance\",attribute_id=\"242\",attribute_value_type=\"raw\"\r\n  }\r\n)\r\n  * on(serial_number)\r\n(\r\n  smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n    * on(device,instance) group_right(serial_number)\r\n  smartctl_device_block_size{instance=~\"$instance\",blocks_type=\"logical\"}\r\n)",
+          "expr": "# Crucial SATA SSD = 251\r\n# Normal ID = 242\r\n(\r\n  smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n    * on(device,instance) group_right(serial_number)\r\n  smartctl_device_attribute{\r\n    instance=~\"$instance\",attribute_id=~\"242|251\",attribute_value_type=\"raw\"\r\n  }\r\n)\r\n  * on(serial_number)\r\n(\r\n  smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n    * on(device,instance) group_right(serial_number)\r\n  smartctl_device_block_size{instance=~\"$instance\",blocks_type=\"logical\"}\r\n)",
           "format": "time_series",
           "legendFormat": "Read",
           "range": true,
@@ -16007,7 +16027,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -16109,12 +16129,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "hoverProximity": 20,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -17526,7 +17547,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -17597,11 +17618,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -17915,7 +17937,7 @@
             "steps": [
               {
                 "color": "transparent",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -18083,7 +18105,7 @@
           }
         ]
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -18298,7 +18320,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -18334,7 +18356,7 @@
                   "steps": [
                     {
                       "color": "green",
-                      "value": null
+                      "value": 0
                     },
                     {
                       "color": "yellow",
@@ -18366,11 +18388,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -18412,6 +18435,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "axisPlacement": "auto",
             "fillOpacity": 70,
             "hideFrom": {
               "legend": false,
@@ -18442,7 +18466,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "dark-red",
@@ -18471,11 +18495,12 @@
         "rowHeight": 0.9,
         "showValue": "never",
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "b",
@@ -20596,7 +20621,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -20623,10 +20648,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -21203,7 +21230,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -21234,10 +21261,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "0": "m",
@@ -21815,7 +21844,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -21841,11 +21870,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -21934,7 +21964,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 359
+            "y": 1872
           },
           "id": 3,
           "options": {
@@ -22025,7 +22055,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 359
+            "y": 1872
           },
           "id": 4,
           "options": {
@@ -22116,7 +22146,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 366
+            "y": 1879
           },
           "id": 5,
           "options": {
@@ -22207,7 +22237,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 366
+            "y": 1879
           },
           "id": 6,
           "options": {
@@ -22312,7 +22342,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 119
+            "y": 1632
           },
           "id": 7,
           "options": {
@@ -22403,7 +22433,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 119
+            "y": 1632
           },
           "id": 8,
           "options": {
@@ -22494,7 +22524,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 126
+            "y": 1639
           },
           "id": 9,
           "options": {
@@ -22585,7 +22615,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 126
+            "y": 1639
           },
           "id": 10,
           "options": {
@@ -22684,7 +22714,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 133
+            "y": 1646
           },
           "id": 11,
           "options": {
@@ -22783,7 +22813,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 133
+            "y": 1646
           },
           "id": 12,
           "options": {
@@ -22882,7 +22912,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 140
+            "y": 1653
           },
           "id": 13,
           "options": {
@@ -22980,7 +23010,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 140
+            "y": 1653
           },
           "id": 14,
           "options": {
@@ -23078,7 +23108,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 147
+            "y": 1660
           },
           "id": 15,
           "options": {
@@ -23176,7 +23206,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 147
+            "y": 1660
           },
           "id": 16,
           "options": {
@@ -23274,7 +23304,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 154
+            "y": 1667
           },
           "id": 17,
           "options": {
@@ -23372,7 +23402,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 154
+            "y": 1667
           },
           "id": 18,
           "options": {
@@ -23470,7 +23500,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 161
+            "y": 1674
           },
           "id": 19,
           "options": {
@@ -23568,7 +23598,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 161
+            "y": 1674
           },
           "id": 20,
           "options": {
@@ -23663,7 +23693,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 168
+            "y": 1681
           },
           "id": 21,
           "options": {
@@ -23758,7 +23788,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 168
+            "y": 1681
           },
           "id": 22,
           "options": {
@@ -23870,7 +23900,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 121
+            "y": 1634
           },
           "id": 23,
           "options": {
@@ -23969,7 +23999,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 121
+            "y": 1634
           },
           "id": 24,
           "options": {
@@ -24068,7 +24098,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 214
+            "y": 1727
           },
           "id": 25,
           "options": {
@@ -24167,7 +24197,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 214
+            "y": 1727
           },
           "id": 26,
           "options": {
@@ -24263,7 +24293,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 447
+            "y": 1960
           },
           "id": 27,
           "options": {
@@ -24358,7 +24388,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 447
+            "y": 1960
           },
           "id": 28,
           "options": {
@@ -24471,7 +24501,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 121
+            "y": 1634
           },
           "id": 30,
           "options": {
@@ -24573,7 +24603,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 121
+            "y": 1634
           },
           "id": 31,
           "options": {
@@ -24675,7 +24705,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 128
+            "y": 1641
           },
           "id": 32,
           "options": {
@@ -24777,7 +24807,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 128
+            "y": 1641
           },
           "id": 33,
           "options": {
@@ -24879,7 +24909,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 135
+            "y": 1648
           },
           "id": 34,
           "options": {
@@ -24981,7 +25011,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 135
+            "y": 1648
           },
           "id": 35,
           "options": {
@@ -25083,7 +25113,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 142
+            "y": 1655
           },
           "id": 36,
           "options": {
@@ -25120,7 +25150,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 40,
+  "schemaVersion": 41,
   "tags": [
     "Hardware",
     "HDD",
@@ -25135,29 +25165,22 @@
     "list": [
       {
         "current": {},
-        "hide": 0,
         "includeAll": false,
         "label": "datasource",
-        "multi": false,
         "name": "datasource",
         "options": [],
         "query": "victoriametrics-metrics-datasource",
-        "queryValue": "",
         "refresh": 1,
         "regex": "//",
-        "skipUrlSync": false,
         "type": "datasource"
       },
       {
         "current": {
-          "selected": false,
           "text": "smartctl_exporter",
           "value": "smartctl_exporter"
         },
-        "hide": 0,
         "includeAll": false,
         "label": "job",
-        "multi": false,
         "name": "job",
         "options": [
           {
@@ -25167,8 +25190,6 @@
           }
         ],
         "query": "smartctl_exporter",
-        "queryValue": "",
-        "skipUrlSync": false,
         "type": "custom"
       },
       {
@@ -25179,10 +25200,8 @@
           "uid": "${datasource}"
         },
         "definition": "label_values(smartctl_device,instance)",
-        "hide": 0,
         "includeAll": true,
         "label": "instance",
-        "multi": false,
         "name": "instance",
         "options": [],
         "query": {
@@ -25191,7 +25210,6 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 1,
         "type": "query"
       },
@@ -25207,7 +25225,6 @@
         "hide": 2,
         "includeAll": true,
         "label": "Device",
-        "multi": false,
         "name": "device",
         "options": [],
         "query": {
@@ -25217,8 +25234,6 @@
         },
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
@@ -25232,7 +25247,6 @@
         "hide": 2,
         "includeAll": true,
         "label": "Serial Number",
-        "multi": false,
         "name": "serialnum",
         "options": [],
         "query": {
@@ -25242,8 +25256,6 @@
         },
         "refresh": 2,
         "regex": "/device=\"(?<text>[^\"]+)|serial_number=\"(?<value>[^\"]+)/g",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
@@ -25254,10 +25266,8 @@
         },
         "definition": "smartctl_device{instance=~\"$instance\", interface=\"ata\"}",
         "description": "device =  Unique HDDs serial number reported by smartctl\nBasically, ata_serial is displayed as device but when used as value it uses a serial_number",
-        "hide": 0,
         "includeAll": true,
         "label": "[ATA] Unique Drives",
-        "multi": false,
         "name": "ata_serial",
         "options": [],
         "query": {
@@ -25266,8 +25276,7 @@
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
-        "regex": "/device=\"(?<text>[^\"]+)|serial_number=\"(?<value>[^\"]+)/g",
-        "skipUrlSync": false,
+        "regex": "/model_name=\"(?<text>[^\"]+)|serial_number=\"(?<value>[^\"]+)/g",
         "sort": 1,
         "type": "query"
       },
@@ -25278,11 +25287,9 @@
           "uid": "${datasource}"
         },
         "definition": "smartctl_device{instance=~\"$instance\", interface=\"nvme\"}",
-        "description": "device =  Unique HDDs serial number reported by smartctl\nBasically, ata_serial is displayed as device but when used as value it uses a serial_number",
-        "hide": 0,
+        "description": "device =  Unique HDDs serial number reported by smartctl\nBasically,nvme_serial is displayed as device but when used as value it uses a serial_number",
         "includeAll": true,
         "label": "[NVMe] Unique Drives",
-        "multi": false,
         "name": "nvme_serial",
         "options": [],
         "query": {
@@ -25291,21 +25298,20 @@
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
-        "regex": "/device=\"(?<text>[^\"]+)|serial_number=\"(?<value>[^\"]+)/g",
-        "skipUrlSync": false,
+        "regex": "/model_name=\"(?<text>[^\"]+)|serial_number=\"(?<value>[^\"]+)/g",
         "sort": 1,
         "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-30d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "SmartCtl",
   "uid": "VY1NDa44k",
-  "version": 525,
+  "version": 535,
   "weekStart": ""
 }
