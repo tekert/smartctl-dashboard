@@ -45,7 +45,7 @@
       "type": "datasource",
       "id": "victoriametrics-metrics-datasource",
       "name": "VictoriaMetrics",
-      "version": "0.19.2"
+      "version": "0.19.3"
     }
   ],
   "annotations": {
@@ -778,7 +778,7 @@
         "type": "victoriametrics-metrics-datasource",
         "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
-      "description": "Device power on seconds",
+      "description": "Device power on seconds\n\nNOTE: some samsung ssds will report 1/8th or 1/3th of an hour, example Samsung SSD 960 EVO is 1/3th and the 970 there are reports it's 1/8th ",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -839,10 +839,10 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(smartctl_device_power_on_seconds{job=~'$job',instance=~'$instance'}/60/60/24\r\n    * on(device,instance) group_left(model_name,serial_number)\r\n    smartctl_device\r\n) without(device)",
+          "expr": "max(smartctl_device_power_on_seconds{job=~'$job',instance=~'$instance'}/60/60/24\r\n    * on(device,instance) group_left(model_name,serial_number)\r\n    (\r\n        smartctl_device{model_name=~\".*Samsung SSD 960 EVO.*\"} * 3 # These drives have 1/3th\r\n            or\r\n        smartctl_device{model_name=~\".*Samsung SSD 970 EVO.*\"} * 8 # These ones report 1/8th\r\n            or\r\n        smartctl_device # The rest are normal.          \r\n    )\r\n) by (model_name, serial_number, instance)",
           "format": "time_series",
           "instant": false,
-          "legendFormat": "{{model_name}}-{{serial_number}}",
+          "legendFormat": "{{model_name}} [{{serial_number}}] {{instance}}",
           "range": true,
           "refId": "smartctl_device_power_on_seconds"
         }
@@ -945,11 +945,11 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(smartctl_device_temperature{instance=~\"$instance\"} * on(device, instance) group_left(model_name, serial_number) smartctl_device) without(device)",
+          "expr": "max(\r\n    smartctl_device_temperature{instance=~\"$instance\"}\r\n    * on(device,instance) group_left(model_name,serial_number)\r\n    smartctl_device\r\n) by(model_name,serial_number)",
           "format": "time_series",
           "hide": false,
           "instant": false,
-          "legendFormat": "{{model_name}}-{{serial_number}}",
+          "legendFormat": "{{model_name}}-[{{serial_number}}]",
           "range": true,
           "refId": "A"
         }
@@ -1754,7 +1754,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmin(\r\n  #last_over_time(  \r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n    * on(device,instance) group_right(model_name,serial_number)\r\n    smartctl_device_smart_status{instance=~\"$instance\"}\r\n  #) \r\n)\r\nwithout(device) #[1d]",
+          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmin(\r\n  #last_over_time(  \r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n    * on(device,instance) group_right(model_name,serial_number)\r\n    smartctl_device_smart_status{instance=~\"$instance\"}\r\n  #) \r\n)\r\nby(serial_number) #[1d]",
           "format": "time_series",
           "instant": false,
           "legendFormat": "SMART STATUS",
@@ -2655,7 +2655,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmax(smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_bytes_written{instance=~\"$instance\"}) without(device)",
+          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmax(smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_bytes_written{instance=~\"$instance\"}) by(serial_number)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "Written",
@@ -2724,7 +2724,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmax(smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_bytes_read{instance=~\"$instance\"}) without(device)",
+          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmax(smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_bytes_read{instance=~\"$instance\"}) by(serial_number)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "Read",
@@ -2797,7 +2797,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmax(smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_capacity_bytes{instance=~\"$instance\"}) without(device)",
+          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmax(smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_capacity_bytes{instance=~\"$instance\"}) by(serial_number)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "Size",
@@ -3197,7 +3197,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(smartctl_device{serial_number=~\"$nvme_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_temperature{instance=~\"$instance\"}) without(device)",
+          "expr": "max(smartctl_device{serial_number=~\"$nvme_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_temperature{instance=~\"$instance\"}) by(serial_number)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "Temperature",
@@ -3500,7 +3500,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "max(\n  smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_block_size{instance=~\"$instance\"} > 0\n) without(device)",
+          "expr": "max(\n  smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_block_size{instance=~\"$instance\"} > 0\n) by(serial_number, blocks_type)",
           "format": "time_series",
           "legendFormat": "{{blocks_type}}",
           "range": true,
@@ -3681,7 +3681,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "max(smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n    smartctl_device_bytes_written{instance=~\"$instance\"}) without(device)",
+          "expr": "max(smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n    smartctl_device_bytes_written{instance=~\"$instance\"}) by(serial_number)",
+          "format": "time_series",
           "legendFormat": "Total Bytes Written (by serial)",
           "range": true,
           "refId": "A"
@@ -3898,7 +3899,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "max(\n  smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n    * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_bytes_read{instance=~\"$instance\"}\n) without(device)",
+          "expr": "max(\n  smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n    * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_bytes_read{instance=~\"$instance\"}\n) by(serial_number)",
+          "format": "time_series",
           "legendFormat": "Total Bytes Read (by serial)",
           "range": true,
           "refId": "B"
@@ -5966,7 +5968,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "max(\r\n  smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n    * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_available_spare{instance=~\"$instance\"}\r\n) without(device)",
+          "expr": "max(\r\n  smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n    * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_available_spare{instance=~\"$instance\"}\r\n) by(serial_number)",
+          "format": "time_series",
           "legendFormat": "Available Spare",
           "range": true,
           "refId": "A"
@@ -6672,7 +6675,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n    smartctl_device_critical_warning{instance=~\"$instance\"}\r\n  ) without(device),\r\n  0x01 # Bit 0 = 0000 0001\r\n) ",
+          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n    smartctl_device_critical_warning{instance=~\"$instance\"}\r\n  ) by (serial_number),\r\n  0x01 # Bit 0 = 0000 0001\r\n) ",
+          "format": "time_series",
           "legendFormat": "Bit 0 ON",
           "range": true,
           "refId": "A"
@@ -6929,7 +6933,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n    smartctl_device_critical_warning{instance=~\"$instance\"}\r\n  ) without(device),\r\n  0x02 # Bit 1 = 0000 0010\r\n)",
+          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n    smartctl_device_critical_warning{instance=~\"$instance\"}\r\n  ) by (serial_number),\r\n  0x02 # Bit 1 = 0000 0010\r\n)",
+          "format": "time_series",
           "legendFormat": "Bit 1 ON",
           "range": true,
           "refId": "B"
@@ -7186,7 +7191,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) without(device),\n  0x04 # Bit 2 = 0000 0100\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x04 # Bit 2 = 0000 0100\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 2 ON",
           "range": true,
@@ -7444,7 +7450,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) without(device),\n  0x08 # Bit 3 = 0000 1000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x08 # Bit 3 = 0000 1000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 3 ON",
           "range": true,
@@ -7702,7 +7709,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) without(device),\n  0x10 # Bit 4 = 0001 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x10 # Bit 4 = 0001 0000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 4 ON",
           "range": true,
@@ -7960,7 +7968,7 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) without(device),\n  0x20 # BIT 5 = 0010 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x20 # BIT 5 = 0010 0000\n)",
           "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 5 ON",
@@ -8219,7 +8227,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) without(device),\n  0xC0 # BIT 6-7 = 1100 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n    smartctl_device_critical_warning{instance=~\"$instance\"}\n  ) by (serial_number),\n  0xC0 # BIT 6-7 = 1100 0000\n)",
           "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 6-7 ON",
@@ -9234,7 +9242,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\r\n  ) without(device),\r\n  0x01 # Bit 0 = 0000 0001\r\n) ",
+          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\r\n  ) by (serial_number),\r\n  0x01 # Bit 0 = 0000 0001\r\n) ",
+          "format": "time_series",
           "legendFormat": "Bit 0 ON",
           "range": true,
           "refId": "A"
@@ -9491,7 +9500,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\r\n  ) without(device),\r\n  0x02 # Bit 1 = 0000 0010\r\n)",
+          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\r\n  ) by (serial_number),\r\n  0x02 # Bit 1 = 0000 0010\r\n)",
+          "format": "time_series",
           "legendFormat": "Bit 1 ON",
           "range": true,
           "refId": "B"
@@ -9748,7 +9758,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x04 # Bit 2 = 0000 0100\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x04 # Bit 2 = 0000 0100\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 2 ON",
           "range": true,
@@ -10006,7 +10017,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x08 # Bit 3 = 0000 1000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x08 # Bit 3 = 0000 1000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 3 ON",
           "range": true,
@@ -10264,7 +10276,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x10 # Bit 4 = 0001 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x10 # Bit 4 = 0001 0000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 4 ON",
           "range": true,
@@ -10522,7 +10535,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x20 # BIT 5 = 0010 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x20 # BIT 5 = 0010 0000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 5 ON",
           "range": true,
@@ -10780,7 +10794,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x40 # BIT 6 = 0100 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x40 # BIT 6 = 0100 0000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 6 ON",
           "range": true,
@@ -11038,7 +11053,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x80 # BIT 7 = 1000 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$nvme_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x80 # BIT 7 = 1000 0000\n)",
           "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 7 ON",
@@ -11913,7 +11928,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\nmin(\r\n  smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_smart_status{instance=~\"$instance\"}\r\n) \r\nwithout(device) [$__range]",
+          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\nmin(\r\n  smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_smart_status{instance=~\"$instance\"}\r\n) \r\nby (serial_number) [$__range]",
           "format": "time_series",
           "instant": false,
           "legendFormat": "SMART STATUS",
@@ -12466,10 +12481,12 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "max(\n  smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_power_on_seconds{instance=~\"$instance\"}/60/60/24\n) by(serial_number)",
           "format": "time_series",
+          "instant": true,
           "legendFormat": "Power On",
-          "range": true,
+          "range": false,
           "refId": "A"
         }
       ],
@@ -13028,7 +13045,7 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "max(smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n      smartctl_device_power_cycle_count{instance=~\"$instance\"} > 0) without(device)",
+          "expr": "max(smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n      smartctl_device_power_cycle_count{instance=~\"$instance\"} > 0) by (serial_number)",
           "format": "time_series",
           "legendFormat": "Power Cycles",
           "range": true,
@@ -13589,7 +13606,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "any(smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n      smartctl_device_interface_speed{instance=~\"$instance\"}) without (device)",
+          "expr": "any(smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n      smartctl_device_interface_speed{instance=~\"$instance\"}) by (serial_number)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "Speed ({{speed_type}})",
@@ -13870,7 +13887,7 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "max(smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n      smartctl_device_block_size{instance=~\"$instance\"} > 0) without(device)",
+          "expr": "max(\n  smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_block_size{instance=~\"$instance\"} > 0\n) by (serial_number, blocks_type)",
           "format": "time_series",
           "legendFormat": "{{blocks_type}}",
           "range": true,
@@ -13941,7 +13958,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmax(smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_capacity_bytes{instance=~\"$instance\"}) without(device)",
+          "expr": "# NOTE: For now we are listing serial numbers and joining them with the metric we want from \"smartctl_device\", \r\n#  if a device doesn't have a serial number this repeat will not work, redoit.\r\n\r\nmax(smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n  * on(device,instance) group_right(model_name,serial_number)\r\n  smartctl_device_capacity_bytes{instance=~\"$instance\"}) by (serial_number)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "Size",
@@ -14342,7 +14359,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(smartctl_device{serial_number=~\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_temperature{instance=~\"$instance\"}) without(device)",
+          "expr": "max(smartctl_device{serial_number=~\"$ata_serial\",instance=~\"$instance\"}\n  * on(device,instance) group_right(model_name,serial_number)\n  smartctl_device_temperature{instance=~\"$instance\"}) by (serial_number)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "Temperature",
@@ -18260,8 +18277,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "red",
-            "mode": "thresholds",
+            "fixedColor": "green",
+            "mode": "continuous-GrYlRd",
             "seriesBy": "last"
           },
           "custom": {
@@ -18334,44 +18351,7 @@
           },
           "unit": "bool"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "custom.axisPlacement",
-                "value": "auto"
-              },
-              {
-                "id": "unit",
-                "value": "none"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "yellow",
-                      "value": 1
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "mappings",
-                "value": []
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 7,
@@ -18754,7 +18734,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\r\n  ) without(device),\r\n  0x01 # Bit 0 = 0000 0001\r\n) ",
+          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\r\n  ) by (serial_number),\r\n  0x01 # Bit 0 = 0000 0001\r\n) ",
+          "format": "time_series",
           "legendFormat": "Bit 0 ON",
           "range": true,
           "refId": "A"
@@ -19011,7 +18992,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\r\n  ) without(device),\r\n  0x02 # Bit 1 = 0000 0010\r\n)",
+          "expr": "bitmap_and(\r\n  max(\r\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\r\n      * on(device,instance) group_right(model_name,serial_number)\r\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\r\n  ) by (serial_number),\r\n  0x02 # Bit 1 = 0000 0010\r\n)",
+          "format": "time_series",
           "legendFormat": "Bit 1 ON",
           "range": true,
           "refId": "B"
@@ -19268,7 +19250,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x04 # Bit 2 = 0000 0100\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x04 # Bit 2 = 0000 0100\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 2 ON",
           "range": true,
@@ -19526,7 +19509,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x08 # Bit 3 = 0000 1000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x08 # Bit 3 = 0000 1000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 3 ON",
           "range": true,
@@ -19784,7 +19768,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x10 # Bit 4 = 0001 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x10 # Bit 4 = 0001 0000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 4 ON",
           "range": true,
@@ -20042,7 +20027,8 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x20 # BIT 5 = 0010 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x20 # BIT 5 = 0010 0000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 5 ON",
           "range": true,
@@ -20300,7 +20286,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x40 # BIT 6 = 0100 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x40 # BIT 6 = 0100 0000\n)",
+          "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 6 ON",
           "range": true,
@@ -20558,7 +20545,7 @@
             "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) without(device),\n  0x80 # BIT 7 = 1000 0000\n)",
+          "expr": "bitmap_and(\n  max(\n    smartctl_device{serial_number=\"$ata_serial\",instance=~\"$instance\"}\n      * on(device,instance) group_right(model_name,serial_number)\n        smartctl_device_smartctl_exit_status{instance=~\"$instance\"}\n  ) by (serial_number),\n  0x80 # BIT 7 = 1000 0000\n)",
           "format": "time_series",
           "hide": false,
           "legendFormat": "Bit 7 ON",
@@ -21964,7 +21951,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1872
+            "y": 2459
           },
           "id": 3,
           "options": {
@@ -21975,11 +21962,12 @@
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "single",
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "12.1.1",
           "targets": [
             {
               "datasource": {
@@ -22055,7 +22043,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1872
+            "y": 2459
           },
           "id": 4,
           "options": {
@@ -22066,11 +22054,12 @@
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "single",
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "12.1.1",
           "targets": [
             {
               "datasource": {
@@ -22146,7 +22135,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1879
+            "y": 2522
           },
           "id": 5,
           "options": {
@@ -22237,7 +22226,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1879
+            "y": 2522
           },
           "id": 6,
           "options": {
@@ -22342,7 +22331,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1632
+            "y": 2460
           },
           "id": 7,
           "options": {
@@ -22353,11 +22342,12 @@
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "single",
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "12.1.1",
           "targets": [
             {
               "datasource": {
@@ -22433,7 +22423,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1632
+            "y": 2460
           },
           "id": 8,
           "options": {
@@ -22444,11 +22434,12 @@
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "single",
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "12.1.1",
           "targets": [
             {
               "datasource": {
@@ -22524,7 +22515,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1639
+            "y": 2467
           },
           "id": 9,
           "options": {
@@ -22615,7 +22606,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1639
+            "y": 2467
           },
           "id": 10,
           "options": {
@@ -22714,7 +22705,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1646
+            "y": 2474
           },
           "id": 11,
           "options": {
@@ -22813,7 +22804,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1646
+            "y": 2474
           },
           "id": 12,
           "options": {
@@ -22912,7 +22903,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1653
+            "y": 2481
           },
           "id": 13,
           "options": {
@@ -23010,7 +23001,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1653
+            "y": 2481
           },
           "id": 14,
           "options": {
@@ -23108,7 +23099,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1660
+            "y": 2488
           },
           "id": 15,
           "options": {
@@ -23206,7 +23197,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1660
+            "y": 2488
           },
           "id": 16,
           "options": {
@@ -23304,7 +23295,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1667
+            "y": 2495
           },
           "id": 17,
           "options": {
@@ -23402,7 +23393,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1667
+            "y": 2495
           },
           "id": 18,
           "options": {
@@ -23500,7 +23491,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1674
+            "y": 2502
           },
           "id": 19,
           "options": {
@@ -23598,7 +23589,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1674
+            "y": 2502
           },
           "id": 20,
           "options": {
@@ -23693,7 +23684,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1681
+            "y": 2509
           },
           "id": 21,
           "options": {
@@ -23788,7 +23779,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1681
+            "y": 2509
           },
           "id": 22,
           "options": {
@@ -23900,7 +23891,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1634
+            "y": 4097
           },
           "id": 23,
           "options": {
@@ -23999,7 +23990,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1634
+            "y": 4097
           },
           "id": 24,
           "options": {
@@ -24098,7 +24089,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1727
+            "y": 4190
           },
           "id": 25,
           "options": {
@@ -24197,7 +24188,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1727
+            "y": 4190
           },
           "id": 26,
           "options": {
@@ -24293,7 +24284,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1960
+            "y": 4423
           },
           "id": 27,
           "options": {
@@ -24388,7 +24379,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1960
+            "y": 4423
           },
           "id": 28,
           "options": {
@@ -24501,7 +24492,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1634
+            "y": 4097
           },
           "id": 30,
           "options": {
@@ -24603,7 +24594,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1634
+            "y": 4097
           },
           "id": 31,
           "options": {
@@ -24705,7 +24696,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1641
+            "y": 4104
           },
           "id": 32,
           "options": {
@@ -24807,7 +24798,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1641
+            "y": 4104
           },
           "id": 33,
           "options": {
@@ -24909,7 +24900,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1648
+            "y": 4111
           },
           "id": 34,
           "options": {
@@ -25011,7 +25002,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 1648
+            "y": 4111
           },
           "id": 35,
           "options": {
@@ -25113,7 +25104,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 1655
+            "y": 4118
           },
           "id": 36,
           "options": {
@@ -25259,20 +25250,22 @@
         "type": "query"
       },
       {
+        "allowCustomValue": false,
         "current": {},
         "datasource": {
           "type": "victoriametrics-metrics-datasource",
           "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
         },
-        "definition": "smartctl_device{instance=~\"$instance\", interface=\"ata\"}",
+        "definition": "query_result(smartctl_device{instance=~\"$instance\", interface=\"ata\"})",
         "description": "device =  Unique HDDs serial number reported by smartctl\nBasically, ata_serial is displayed as device but when used as value it uses a serial_number",
         "includeAll": true,
         "label": "[ATA] Unique Drives",
+        "multi": true,
         "name": "ata_serial",
         "options": [],
         "query": {
-          "qryType": 4,
-          "query": "smartctl_device{instance=~\"$instance\", interface=\"ata\"}",
+          "qryType": 3,
+          "query": "query_result(smartctl_device{instance=~\"$instance\", interface=\"ata\"})",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
@@ -25281,20 +25274,22 @@
         "type": "query"
       },
       {
+        "allowCustomValue": false,
         "current": {},
         "datasource": {
           "type": "victoriametrics-metrics-datasource",
           "uid": "${datasource}"
         },
-        "definition": "smartctl_device{instance=~\"$instance\", interface=\"nvme\"}",
+        "definition": "query_result(smartctl_device{instance=~\"$instance\", interface=\"nvme\"})",
         "description": "device =  Unique HDDs serial number reported by smartctl\nBasically,nvme_serial is displayed as device but when used as value it uses a serial_number",
         "includeAll": true,
         "label": "[NVMe] Unique Drives",
+        "multi": true,
         "name": "nvme_serial",
         "options": [],
         "query": {
-          "qryType": 4,
-          "query": "smartctl_device{instance=~\"$instance\", interface=\"nvme\"}",
+          "qryType": 3,
+          "query": "query_result(smartctl_device{instance=~\"$instance\", interface=\"nvme\"})",
           "refId": "VariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
@@ -25305,13 +25300,13 @@
     ]
   },
   "time": {
-    "from": "now-30d",
+    "from": "now-90d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "SmartCtl",
   "uid": "VY1NDa44k",
-  "version": 535,
+  "version": 560,
   "weekStart": ""
 }
